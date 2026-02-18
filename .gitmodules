@@ -1,0 +1,3 @@
+[submodule "src/pysc2"]
+	path = src/pysc2
+	url = https://github.com/google-deepmind/pysc2

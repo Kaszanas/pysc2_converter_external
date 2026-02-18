@@ -1,0 +1,10 @@
+// Import from pysc2 protos the definitions for the message that is required:
+
+
+
+service ExternalConverterService {
+   // (Method definitions not shown)
+
+    rpc GetFeature(Point) returns (Feature) {}
+
+}

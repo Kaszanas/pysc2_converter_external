@@ -1,0 +1,25 @@
+[project]
+name = "pysc2-converter-external"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Kaszanas", email = "34846245+Kaszanas@users.noreply.github.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "pysc2>=4.0.0",
+]
+
+
+[dependency-groups]
+dev = [
+    "commitizen>=4.13.8",
+    "ruff>=0.15.1",
+]
+
+
+[build-system]
+requires = ["uv_build>=0.9.5,<0.10.0"]
+build-backend = "uv_build"
+

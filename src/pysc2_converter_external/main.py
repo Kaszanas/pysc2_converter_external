@@ -4,36 +4,39 @@ import time
 
 import grpc
 
+from pysc2_converter_external.grpc_converter import GRPCConverter
+import pysc2_converter_external.proto.service_pb2 as service_pb2
 import pysc2_converter_external.proto.service_pb2_grpc as service_pb2_grpc
 
 
 class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
     def ConfigureConverter(
         self,
-        request: service_pb2_grpc.ConfigureConverterRequest,
+        request: service_pb2.ConfigureRequest,
         context,
-    ):
+    ) -> service_pb2.ConfigureResponse:
 
-        self.hardcoded_converter = 
+        try:
+            self.converter = GRPCConverter(
+                settings=request.settings,
+                environment_info=request.environment_info,
+            )
+            return service_pb2.ConfigureResponse(success=True)
+        except Exception as e:
+            logging.error(f"Error occurred while configuring converter: {e}")
+            return service_pb2.ConfigureResponse(success=False)
 
+    def GetObservationSpec(self, request, context):
+        return self.converter.observation_spec()
 
-        # converter_to_wrap = Converter(
-        #     settings=request.settings,
-        #     environment_info=request.environment_info,
-        # )
-
-        # self.converter = ConverterWrapper()
-
-        # pass
-
-    def ObservationSpec(self, request, context):
-        pass
-
-    def ActionSpec(self, request, context):
-        pass
+    def GetActionSpec(self, request, context):
+        return self.converter.action_spec()
 
     def ConvertObservation(self, request, context):
-        pass
+        return self.converter.convert_observation(request)
+
+    def ConvertAction(self, request, context):
+        return self.converter.convert_action(request)
 
 
 def serve():

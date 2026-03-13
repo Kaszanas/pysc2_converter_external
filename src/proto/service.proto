@@ -5,6 +5,11 @@ syntax = "proto2";
 // Converter protocol file from pysc2:
 import "pysc2/env/converter/proto/converter.proto";
 
+message ConfigureRequest {
+    required pysc2.ConverterSettings settings = 1;
+    required pysc2.EnvironmentInfo environment_info = 2;
+}
+
 message ConfigureResponse {
   // Whether the converter was successfully configured.
   required bool success = 1;
@@ -46,7 +51,7 @@ message ActionRequest {
 }
 
 service ExternalConverterService {
-    rpc ConfigureConverter(pysc2.ConverterSettings) returns (ConfigureResponse) {}
+    rpc ConfigureConverter(ConfigureRequest) returns (ConfigureResponse) {}
 
     rpc GetObservationSpec(Empty) returns (ObservationSpec) {}
 

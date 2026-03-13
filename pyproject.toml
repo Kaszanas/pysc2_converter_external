@@ -8,18 +8,24 @@ authors = [
 ]
 requires-python = ">=3.10"
 dependencies = [
+    "grpcio>=1.78.0",
     "protobuf<3.21.0",
     "pysc2>=4.0.0",
     "s2clientprotocol>=5.0.15.95299.0",
+    "s2protocol>=5.0.15.95299.0",
 ]
 
 
 [dependency-groups]
 dev = [
-    "commitizen>=4.13.8",
+    "commitizen>=4.13.9",
     "pytest>=9.0.2",
-    "ruff>=0.15.1",
+    "ruff>=0.15.6",
 ]
+
+[tool.uv.sources]
+s2protocol = { git = "https://github.com/Kaszanas/s2protocol" }
+
 
 
 [build-system]

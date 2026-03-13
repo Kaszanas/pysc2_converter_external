@@ -28,5 +28,6 @@ exclude: |
         ^charts/|
         ^old/|
         ^/src/pysc2/|
-        ^/src/s2client-proto/
+        ^/src/s2client-proto/|
+        ^/src/pysc2_converter_external/proto/
     )

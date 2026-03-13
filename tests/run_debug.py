@@ -1,11 +1,12 @@
 import os
 import sys
+
 import pytest
 
 if __name__ == "__main__":
     """
-    Utility script to run pytest programmatically. 
-    This makes it very easy to attach a debugger (like the VS Code Python Debugger) 
+    Utility script to run pytest programmatically.
+    This makes it very easy to attach a debugger (like the VS Code Python Debugger)
     by simply running this file in 'Debug' mode (F5).
     """
     # Get the directory of this script (the `tests` directory)

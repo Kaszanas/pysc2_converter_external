@@ -1,21 +1,21 @@
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Ensure the `src` directory is in the python path for importing
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 
-import pytest
-import grpc
 from concurrent import futures
 
-from pysc2_converter_external.main import Listener
-import pysc2_converter_external.proto.service_pb2 as service_pb2
-import pysc2_converter_external.proto.service_pb2_grpc as service_pb2_grpc
-
+import grpc
+import pytest
 from pysc2.env.converter.proto import converter_pb2
 from s2clientprotocol import common_pb2
 from s2clientprotocol import sc2api_pb2 as sc_pb
+
+import pysc2_converter_external.proto.service_pb2 as service_pb2
+import pysc2_converter_external.proto.service_pb2_grpc as service_pb2_grpc
+from pysc2_converter_external.main import Listener
 
 
 @pytest.fixture(scope="module")

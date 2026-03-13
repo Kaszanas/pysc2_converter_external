@@ -1,6 +1,6 @@
 import grpc
-from pysc2_converter_external.proto import service_pb2_grpc
-from pysc2_converter_external.proto import service_pb2
+
+from pysc2_converter_external.proto import service_pb2, service_pb2_grpc
 
 
 def main_client(connection_channel: grpc.Channel):

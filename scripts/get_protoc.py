@@ -15,11 +15,11 @@ import platform
 import shutil
 import stat
 import sys
+import tarfile
 import tempfile
 import urllib.request
-from pathlib import Path
 import zipfile
-import tarfile
+from pathlib import Path
 
 
 def choose_filename(version: str) -> str:

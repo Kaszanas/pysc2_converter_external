@@ -1,7 +1,7 @@
 from pysc2.env.converter.cc.python import converter
 from pysc2.env.converter.proto import converter_pb2
-
 from s2clientprotocol import sc2api_pb2
+
 import pysc2_converter_external.proto.service_pb2 as service_pb2
 
 

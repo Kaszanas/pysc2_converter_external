@@ -1,13 +1,13 @@
-from concurrent import futures
 import logging
 import time
+from concurrent import futures
 
 import grpc
+from pysc2.env.converter.proto import converter_pb2
 
-from pysc2_converter_external.grpc_converter import GRPCConverter
 import pysc2_converter_external.proto.service_pb2 as service_pb2
 import pysc2_converter_external.proto.service_pb2_grpc as service_pb2_grpc
-from pysc2.env.converter.proto import converter_pb2
+from pysc2_converter_external.grpc_converter import GRPCConverter
 
 
 class Listener(service_pb2_grpc.ExternalConverterServiceServicer):

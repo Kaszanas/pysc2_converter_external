@@ -3,7 +3,7 @@
 syntax = "proto2";
 
 // Converter protocol file from pysc2:
-// import "pysc2/pysc2/env/converter/proto/converter.proto";
+import "pysc2/env/converter/proto/converter.proto";
 
 message ConfigureResponse {
   // Whether the converter was successfully configured.
@@ -17,13 +17,32 @@ message RandomNumberResponse {
 
 message Empty {}
 
+
+
+message KeyTensorSpec {
+    required string key = 1;
+    required TensorSpec spec = 2;
+}
+
+message ObservationSpec {
+    // The specification of the observation returned by the converter.
+    repeated KeyTensorSpec specs = 1;
+}
+
+message ActionSpec {
+    // The specification of the action accepted by the converter.
+    repeated KeyTensorSpec specs = 1;
+}
+
 service ExternalConverterService {
-    // (Method definitions not shown)
-    rpc GetRandomNumber(Empty) returns (RandomNumberResponse) {}
+    rpc ConfigureConverter(ConverterSettings) returns (ConfigureResponse) {}
 
+    rpc GetObservationSpec(Empty) returns (ObservationSpec) {}
 
-    // rpc ConfigureConverter(ConverterSettings) returns (ConfigureResponse) {}
+    rpc GetActionSpec(Empty) returns (ActionSpec) {}
 
-    // rpc ConvertObservation(Observation) returns (ConvertedObservation) {}
+    rpc ConvertObservation(pysc2.Observation) returns (ConvertedObservation) {}
+
+    rpc ConvertAction()
 
 }

@@ -15,7 +15,7 @@ _sym_db = _symbol_database.Default()
 from pysc2.env.converter.proto import converter_pb2 as pysc2_dot_env_dot_converter_dot_proto_dot_converter__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rservice.proto\x1a)pysc2/env/converter/proto/converter.proto\"p\n\x10\x43onfigureRequest\x12*\n\x08settings\x18\x01 \x02(\x0b\x32\x18.pysc2.ConverterSettings\x12\x30\n\x10\x65nvironment_info\x18\x02 \x02(\x0b\x32\x16.pysc2.EnvironmentInfo\"$\n\x11\x43onfigureResponse\x12\x0f\n\x07success\x18\x01 \x02(\x08\"-\n\x14RandomNumberResponse\x12\x15\n\rrandom_number\x18\x01 \x02(\x05\"\x07\n\x05\x45mpty\"*\n\rKeyTensorSpec\x12\x0b\n\x03key\x18\x01 \x02(\t\x12\x0c\n\x04spec\x18\x02 \x02(\x0c\"0\n\x0fObservationSpec\x12\x1d\n\x05specs\x18\x01 \x03(\x0b\x32\x0e.KeyTensorSpec\"+\n\nActionSpec\x12\x1d\n\x05specs\x18\x01 \x03(\x0b\x32\x0e.KeyTensorSpec\"{\n\x14\x43onvertedObservation\x12\x33\n\x07tensors\x18\x01 \x03(\x0b\x32\".ConvertedObservation.TensorsEntry\x1a.\n\x0cTensorsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\"m\n\rActionRequest\x12,\n\x07tensors\x18\x01 \x03(\x0b\x32\x1b.ActionRequest.TensorsEntry\x1a.\n\x0cTensorsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\x32\xa8\x02\n\x18\x45xternalConverterService\x12=\n\x12\x43onfigureConverter\x12\x11.ConfigureRequest\x1a\x12.ConfigureResponse\"\x00\x12\x30\n\x12GetObservationSpec\x12\x06.Empty\x1a\x10.ObservationSpec\"\x00\x12&\n\rGetActionSpec\x12\x06.Empty\x1a\x0b.ActionSpec\"\x00\x12\x41\n\x12\x43onvertObservation\x12\x12.pysc2.Observation\x1a\x15.ConvertedObservation\"\x00\x12\x30\n\rConvertAction\x12\x0e.ActionRequest\x1a\r.pysc2.Action\"\x00')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rservice.proto\x1a)pysc2/env/converter/proto/converter.proto\"p\n\x10\x43onfigureRequest\x12*\n\x08settings\x18\x01 \x02(\x0b\x32\x18.pysc2.ConverterSettings\x12\x30\n\x10\x65nvironment_info\x18\x02 \x02(\x0b\x32\x16.pysc2.EnvironmentInfo\"$\n\x11\x43onfigureResponse\x12\x0f\n\x07success\x18\x01 \x02(\x08\"-\n\x14RandomNumberResponse\x12\x15\n\rrandom_number\x18\x01 \x02(\x05\"\x07\n\x05\x45mpty\"k\n\x0fObservationSpec\x12*\n\x05specs\x18\x01 \x03(\x0b\x32\x1b.ObservationSpec.SpecsEntry\x1a,\n\nSpecsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\"a\n\nActionSpec\x12%\n\x05specs\x18\x01 \x03(\x0b\x32\x16.ActionSpec.SpecsEntry\x1a,\n\nSpecsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\"{\n\x14\x43onvertedObservation\x12\x33\n\x07tensors\x18\x01 \x03(\x0b\x32\".ConvertedObservation.TensorsEntry\x1a.\n\x0cTensorsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\"m\n\rActionRequest\x12,\n\x07tensors\x18\x01 \x03(\x0b\x32\x1b.ActionRequest.TensorsEntry\x1a.\n\x0cTensorsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\x32\xa8\x02\n\x18\x45xternalConverterService\x12=\n\x12\x43onfigureConverter\x12\x11.ConfigureRequest\x1a\x12.ConfigureResponse\"\x00\x12\x30\n\x12GetObservationSpec\x12\x06.Empty\x1a\x10.ObservationSpec\"\x00\x12&\n\rGetActionSpec\x12\x06.Empty\x1a\x0b.ActionSpec\"\x00\x12\x41\n\x12\x43onvertObservation\x12\x12.pysc2.Observation\x1a\x15.ConvertedObservation\"\x00\x12\x30\n\rConvertAction\x12\x0e.ActionRequest\x1a\r.pysc2.Action\"\x00')
 
 
 
@@ -23,9 +23,10 @@ _CONFIGUREREQUEST = DESCRIPTOR.message_types_by_name['ConfigureRequest']
 _CONFIGURERESPONSE = DESCRIPTOR.message_types_by_name['ConfigureResponse']
 _RANDOMNUMBERRESPONSE = DESCRIPTOR.message_types_by_name['RandomNumberResponse']
 _EMPTY = DESCRIPTOR.message_types_by_name['Empty']
-_KEYTENSORSPEC = DESCRIPTOR.message_types_by_name['KeyTensorSpec']
 _OBSERVATIONSPEC = DESCRIPTOR.message_types_by_name['ObservationSpec']
+_OBSERVATIONSPEC_SPECSENTRY = _OBSERVATIONSPEC.nested_types_by_name['SpecsEntry']
 _ACTIONSPEC = DESCRIPTOR.message_types_by_name['ActionSpec']
+_ACTIONSPEC_SPECSENTRY = _ACTIONSPEC.nested_types_by_name['SpecsEntry']
 _CONVERTEDOBSERVATION = DESCRIPTOR.message_types_by_name['ConvertedObservation']
 _CONVERTEDOBSERVATION_TENSORSENTRY = _CONVERTEDOBSERVATION.nested_types_by_name['TensorsEntry']
 _ACTIONREQUEST = DESCRIPTOR.message_types_by_name['ActionRequest']
@@ -58,26 +59,35 @@ Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
   })
 _sym_db.RegisterMessage(Empty)
 
-KeyTensorSpec = _reflection.GeneratedProtocolMessageType('KeyTensorSpec', (_message.Message,), {
-  'DESCRIPTOR' : _KEYTENSORSPEC,
-  '__module__' : 'service_pb2'
-  # @@protoc_insertion_point(class_scope:KeyTensorSpec)
-  })
-_sym_db.RegisterMessage(KeyTensorSpec)
-
 ObservationSpec = _reflection.GeneratedProtocolMessageType('ObservationSpec', (_message.Message,), {
+
+  'SpecsEntry' : _reflection.GeneratedProtocolMessageType('SpecsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _OBSERVATIONSPEC_SPECSENTRY,
+    '__module__' : 'service_pb2'
+    # @@protoc_insertion_point(class_scope:ObservationSpec.SpecsEntry)
+    })
+  ,
   'DESCRIPTOR' : _OBSERVATIONSPEC,
   '__module__' : 'service_pb2'
   # @@protoc_insertion_point(class_scope:ObservationSpec)
   })
 _sym_db.RegisterMessage(ObservationSpec)
+_sym_db.RegisterMessage(ObservationSpec.SpecsEntry)
 
 ActionSpec = _reflection.GeneratedProtocolMessageType('ActionSpec', (_message.Message,), {
+
+  'SpecsEntry' : _reflection.GeneratedProtocolMessageType('SpecsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _ACTIONSPEC_SPECSENTRY,
+    '__module__' : 'service_pb2'
+    # @@protoc_insertion_point(class_scope:ActionSpec.SpecsEntry)
+    })
+  ,
   'DESCRIPTOR' : _ACTIONSPEC,
   '__module__' : 'service_pb2'
   # @@protoc_insertion_point(class_scope:ActionSpec)
   })
 _sym_db.RegisterMessage(ActionSpec)
+_sym_db.RegisterMessage(ActionSpec.SpecsEntry)
 
 ConvertedObservation = _reflection.GeneratedProtocolMessageType('ConvertedObservation', (_message.Message,), {
 
@@ -113,6 +123,10 @@ _EXTERNALCONVERTERSERVICE = DESCRIPTOR.services_by_name['ExternalConverterServic
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
+  _OBSERVATIONSPEC_SPECSENTRY._options = None
+  _OBSERVATIONSPEC_SPECSENTRY._serialized_options = b'8\001'
+  _ACTIONSPEC_SPECSENTRY._options = None
+  _ACTIONSPEC_SPECSENTRY._serialized_options = b'8\001'
   _CONVERTEDOBSERVATION_TENSORSENTRY._options = None
   _CONVERTEDOBSERVATION_TENSORSENTRY._serialized_options = b'8\001'
   _ACTIONREQUEST_TENSORSENTRY._options = None
@@ -125,20 +139,22 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _RANDOMNUMBERRESPONSE._serialized_end=257
   _EMPTY._serialized_start=259
   _EMPTY._serialized_end=266
-  _KEYTENSORSPEC._serialized_start=268
-  _KEYTENSORSPEC._serialized_end=310
-  _OBSERVATIONSPEC._serialized_start=312
-  _OBSERVATIONSPEC._serialized_end=360
-  _ACTIONSPEC._serialized_start=362
-  _ACTIONSPEC._serialized_end=405
-  _CONVERTEDOBSERVATION._serialized_start=407
-  _CONVERTEDOBSERVATION._serialized_end=530
-  _CONVERTEDOBSERVATION_TENSORSENTRY._serialized_start=484
-  _CONVERTEDOBSERVATION_TENSORSENTRY._serialized_end=530
-  _ACTIONREQUEST._serialized_start=532
-  _ACTIONREQUEST._serialized_end=641
-  _ACTIONREQUEST_TENSORSENTRY._serialized_start=484
-  _ACTIONREQUEST_TENSORSENTRY._serialized_end=530
-  _EXTERNALCONVERTERSERVICE._serialized_start=644
-  _EXTERNALCONVERTERSERVICE._serialized_end=940
+  _OBSERVATIONSPEC._serialized_start=268
+  _OBSERVATIONSPEC._serialized_end=375
+  _OBSERVATIONSPEC_SPECSENTRY._serialized_start=331
+  _OBSERVATIONSPEC_SPECSENTRY._serialized_end=375
+  _ACTIONSPEC._serialized_start=377
+  _ACTIONSPEC._serialized_end=474
+  _ACTIONSPEC_SPECSENTRY._serialized_start=331
+  _ACTIONSPEC_SPECSENTRY._serialized_end=375
+  _CONVERTEDOBSERVATION._serialized_start=476
+  _CONVERTEDOBSERVATION._serialized_end=599
+  _CONVERTEDOBSERVATION_TENSORSENTRY._serialized_start=553
+  _CONVERTEDOBSERVATION_TENSORSENTRY._serialized_end=599
+  _ACTIONREQUEST._serialized_start=601
+  _ACTIONREQUEST._serialized_end=710
+  _ACTIONREQUEST_TENSORSENTRY._serialized_start=553
+  _ACTIONREQUEST_TENSORSENTRY._serialized_end=599
+  _EXTERNALCONVERTERSERVICE._serialized_start=713
+  _EXTERNALCONVERTERSERVICE._serialized_end=1009
 # @@protoc_insertion_point(module_scope)

@@ -23,20 +23,14 @@ message RandomNumberResponse {
 message Empty {}
 
 
-
-message KeyTensorSpec {
-    required string key = 1;
-    required bytes spec = 2;
-}
-
 message ObservationSpec {
-    // The specification of the observation returned by the converter.
-    repeated KeyTensorSpec specs = 1;
+    // A map of strings (feature names) to serialized `dm_env_rpc.v1.TensorSpec` bytes
+    map<string, bytes> specs = 1;
 }
 
 message ActionSpec {
-    // The specification of the action accepted by the converter.
-    repeated KeyTensorSpec specs = 1;
+    // A map of strings (action names) to serialized `dm_env_rpc.v1.TensorSpec` bytes
+    map<string, bytes> specs = 1;
 }
 
 // Represents the dynamically sized output data per frame

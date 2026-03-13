@@ -1,4 +1,5 @@
-FROM python:3.10-slim-trixie
+# Use an official Python runtime as a parent image
+FROM python:3.10-slim
 
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
@@ -9,6 +10,13 @@ ENV UV_COMPILE_BYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=0
 
+# Install system dependencies if necessary (e.g. for pygame)
+# PyGame often needs some system libraries
+RUN apt-get update && apt-get install -y \
+    libsdl2-2.0-0 \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 # Copy dependency files first for better layer caching
@@ -18,17 +26,16 @@ COPY pyproject.toml ./
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --all-groups --no-install-project
 
-# Copy the rest of the source code
+COPY pyproject.toml README.md ./
 COPY src/ ./src/
+COPY tests/ ./tests/
 
 # Install the project itself
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --all-groups
 
-# Add the virtual environment to PATH
+# Add the virtual environment to PATH so commands like 'pytest' work natively
 ENV PATH="/app/.venv/bin:$PATH"
 
-CMD ["bash"]
-
-
-
+# Keep the container running or drop to shell
+CMD ["/bin/bash"]

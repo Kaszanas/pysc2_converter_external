@@ -7,6 +7,7 @@ import grpc
 from pysc2_converter_external.grpc_converter import GRPCConverter
 import pysc2_converter_external.proto.service_pb2 as service_pb2
 import pysc2_converter_external.proto.service_pb2_grpc as service_pb2_grpc
+from pysc2.env.converter.proto import converter_pb2
 
 
 class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
@@ -17,7 +18,7 @@ class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
     ) -> service_pb2.ConfigureResponse:
 
         try:
-            self.converter = GRPCConverter(
+            self.converter: GRPCConverter = GRPCConverter(
                 settings=request.settings,
                 environment_info=request.environment_info,
             )
@@ -26,17 +27,21 @@ class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
             logging.error(f"Error occurred while configuring converter: {e}")
             return service_pb2.ConfigureResponse(success=False)
 
-    def GetObservationSpec(self, request, context):
-        return self.converter.observation_spec()
+    def GetObservationSpec(self, request, context) -> service_pb2.ObservationSpec:
+        observation_spec = self.converter.observation_spec()
+        return observation_spec
 
-    def GetActionSpec(self, request, context):
-        return self.converter.action_spec()
+    def GetActionSpec(self, request, context) -> service_pb2.ActionSpec:
+        action_spec = self.converter.action_spec()
+        return action_spec
 
-    def ConvertObservation(self, request, context):
-        return self.converter.convert_observation(request)
+    def ConvertObservation(self, request, context) -> service_pb2.ConvertedObservation:
+        converted_obs = self.converter.convert_observation(request)
+        return converted_obs
 
-    def ConvertAction(self, request, context):
-        return self.converter.convert_action(request)
+    def ConvertAction(self, request, context) -> converter_pb2.Action:
+        converted_action = self.converter.convert_action(request)
+        return converted_action
 
 
 def serve():

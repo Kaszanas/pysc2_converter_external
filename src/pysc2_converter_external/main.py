@@ -4,24 +4,27 @@ import time
 
 import grpc
 
-from pysc2.env.converter.converter import Converter
-from pysc2_converter_external.converter_wrapper import ConverterWrapper
 import pysc2_converter_external.proto.service_pb2_grpc as service_pb2_grpc
 
 
 class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
     def ConfigureConverter(
-        self, request: service_pb2_grpc.ConfigureConverterRequest, context
+        self,
+        request: service_pb2_grpc.ConfigureConverterRequest,
+        context,
     ):
 
-        converter_to_wrap = Converter(
-            settings=request.settings,
-            environment_info=request.environment_info,
-        )
+        self.hardcoded_converter = 
 
-        self.converter = ConverterWrapper()
 
-        pass
+        # converter_to_wrap = Converter(
+        #     settings=request.settings,
+        #     environment_info=request.environment_info,
+        # )
+
+        # self.converter = ConverterWrapper()
+
+        # pass
 
     def ObservationSpec(self, request, context):
         pass

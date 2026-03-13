@@ -1,5 +1,6 @@
 import grpc
 from pysc2_converter_external.proto import service_pb2_grpc
+from pysc2_converter_external.proto import service_pb2
 
 
 def main_client(connection_channel: grpc.Channel):
@@ -8,7 +9,7 @@ def main_client(connection_channel: grpc.Channel):
         stub = service_pb2_grpc.ExternalConverterServiceStub(connection_channel)
 
         for i in range(1000):
-            response = stub.GetRandomNumber(service_pb2_grpc.Empty())
+            response = stub.GetRandomNumber(service_pb2.Empty())
             print(f"index {i} Received random number: {response.random_number}")
 
     except Exception as e:

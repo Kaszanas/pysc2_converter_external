@@ -42,7 +42,10 @@ class GRPCConverter:
         with the specified converter settings and instantiated environment info.
         """
 
-        observation_spec = self._converter.ObservationSpec()
+        observation_spec = service_pb2.ObservationSpec()
+        # self._converter.ObservationSpec() returns a dict of string -> bytes
+        for k, v in self._converter.ObservationSpec().items():
+            observation_spec.specs[k] = v
 
         return observation_spec
 
@@ -53,7 +56,9 @@ class GRPCConverter:
         with the specified converter settings and instantiated environment info.
         """
 
-        action_spec = self._converter.ActionSpec()
+        action_spec = service_pb2.ActionSpec()
+        for k, v in self._converter.ActionSpec().items():
+            action_spec.specs[k] = v
 
         return action_spec
 

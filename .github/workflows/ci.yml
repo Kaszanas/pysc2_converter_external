@@ -1,48 +1,48 @@
 name: Continuous Integration (CI)
 
 on:
-    pull_request:
-    push:
-        branches:
-            - main
-            - dev
-    workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
 
 # To successfully find the files that are required for testing:
 env:
-    TEST_WORKSPACE: ${{ github.workspace }}
+  TEST_WORKSPACE: ${{ github.workspace }}
 
 jobs:
-    ci:
-        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event_name == 'pull_request' || (github.event_name == 'issue_comment' && github.event.comment.body == 'recheck ci' && github.event.comment.user.login == 'Kaszanas')
-        # Set up operating system
-        runs-on: ubuntu-latest
+  ci:
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event_name == 'pull_request' || (github.event_name == 'issue_comment' && github.event.comment.body == 'recheck ci' && github.event.comment.user.login == 'Kaszanas')
+    # Set up operating system
+    runs-on: ubuntu-latest
 
-        # Define job steps
-        steps:
-            - name: Check-out repository
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    # Define job steps
+    steps:
+      - name: Check-out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
-            - name: Install the latest version of uv and set the python version to 3.13t
-              uses: astral-sh/setup-uv@v7
+      - name: Install the latest version of uv and set the python version to 3.13t
+        uses: astral-sh/setup-uv@e06108dd0aef18192324c70427afc47652e63a82
 
-              # Installing only development dependencies (for pre-commit)
-            - name: Install development dependencies
-              run: uv sync --only-dev
+        # Installing only development dependencies (for pre-commit)
+      - name: Install development dependencies
+        run: uv sync --only-dev
 
-              # Code quality checks:
-            - name: Initialize pre-commit
-              run: uvx pre-commit install
-            - name: Run pre-commit on all files.
-              run: uvx pre-commit run --all-files
+        # Code quality checks:
+      - name: Initialize pre-commit
+        run: uvx pre-commit install
+      - name: Run pre-commit on all files.
+        run: uvx pre-commit run --all-files
 
-              # Run tests:
-            - name: Install all dependencies
-              run: uv sync
-            - name: Run tests
-              run: uv run pytest ./tests
+        # Run tests:
+      - name: Install all dependencies
+        run: uv sync
+      - name: Run tests
+        run: uv run pytest ./tests
 
-            # # TODO: This may be ran in docker:
-            # # See if the documentation builds correctly:
-            # - name: Build documentation
-            #   run: poetry run make html --directory docs/
+      # # TODO: This may be ran in docker:
+      # # See if the documentation builds correctly:
+      # - name: Build documentation
+      #   run: poetry run make html --directory docs/

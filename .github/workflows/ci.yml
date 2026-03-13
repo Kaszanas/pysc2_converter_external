@@ -25,7 +25,6 @@ jobs:
 
             - name: Install the latest version of uv and set the python version to 3.13t
               uses: astral-sh/setup-uv@v7
-            - run: uv pip install pip
 
               # Installing only development dependencies (for pre-commit)
             - name: Install development dependencies

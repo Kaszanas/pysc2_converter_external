@@ -1,0 +1,34 @@
+FROM python:3.10-slim-trixie
+
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+# Set environment variables for uv
+ENV UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=0
+
+WORKDIR /app
+
+# Copy dependency files first for better layer caching
+COPY pyproject.toml ./
+
+# Install all dependencies including the dev group
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --all-groups --no-install-project
+
+# Copy the rest of the source code
+COPY src/ ./src/
+
+# Install the project itself
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --all-groups
+
+# Add the virtual environment to PATH
+ENV PATH="/app/.venv/bin:$PATH"
+
+CMD ["bash"]
+
+
+

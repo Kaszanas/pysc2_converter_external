@@ -1,25 +1,36 @@
 from concurrent import futures
 import logging
-from random import random
 import time
 
 import grpc
 
+from pysc2.env.converter.converter import Converter
+from pysc2_converter_external.converter_wrapper import ConverterWrapper
 import pysc2_converter_external.proto.service_pb2_grpc as service_pb2_grpc
-import pysc2_converter_external.proto.service_pb2 as service_pb2
 
 
 class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
-    def GetRandomNumber(self, request, context):
+    def ConfigureConverter(
+        self, request: service_pb2_grpc.ConfigureConverterRequest, context
+    ):
 
-        # Example random number
+        converter_to_wrap = Converter(
+            settings=request.settings,
+            environment_info=request.environment_info,
+        )
 
-        # get random int between 0 and 100
-        random_number = random.randint(0, 100)
+        self.converter = ConverterWrapper()
 
-        response = service_pb2.RandomNumberResponse(random_number=random_number)
+        pass
 
-        return response
+    def ObservationSpec(self, request, context):
+        pass
+
+    def ActionSpec(self, request, context):
+        pass
+
+    def ConvertObservation(self, request, context):
+        pass
 
 
 def serve():
@@ -52,9 +63,15 @@ def serve():
 
 def main():
 
+    logging.basicConfig(
+        level=logging.INFO,
+        format="[%(asctime)s] %(levelname)s: %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+
     # Initialize the gRPC server and register the converter service implementation
     serve()
 
 
 if __name__ == "__main__":
-    print("Hello from pysc2-converter-external!")
+    main()

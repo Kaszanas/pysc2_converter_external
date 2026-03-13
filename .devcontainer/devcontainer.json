@@ -30,7 +30,8 @@
         "ms-python.vscode-pylance",
         "ms-python.debugpy",
         "ms-python.vscode-python-envs",
-        "DrBlury.protobuf-vsc"
+        "DrBlury.protobuf-vsc",
+        "tamasfe.even-better-toml"
       ]
     }
   }

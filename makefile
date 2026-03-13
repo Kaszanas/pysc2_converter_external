@@ -45,3 +45,7 @@ compile_protos_python: ## Generate Python code for the gRPC service from the .pr
 	--python_out=./src/pysc2_converter_external/proto \
 	--grpc_python_out=./src/pysc2_converter_external/proto \
 	./src/proto/service.proto
+
+
+test: ## Run all tests using pytest
+	pytest tests/

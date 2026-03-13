@@ -35,17 +35,14 @@ class GRPCConverter:
         )
 
     def observation_spec(self) -> service_pb2.ObservationSpec:
-        """Returns the observation spec.
+        """
+        Returns the observation spec.
 
         This is a flat mapping of string label to dm_env array spec and varies
         with the specified converter settings and instantiated environment info.
         """
 
-        observation_spec = service_pb2.ObservationSpec()
-
-        for k, v in self._converter.ObservationSpec().items():
-            spec = service_pb2.KeyTensorSpec(key=k, spec=v)
-            observation_spec.specs.append(spec)
+        observation_spec = self._converter.ObservationSpec()
 
         return observation_spec
 
@@ -56,11 +53,7 @@ class GRPCConverter:
         with the specified converter settings and instantiated environment info.
         """
 
-        action_spec = service_pb2.ActionSpec()
-
-        for k, v in self._converter.ActionSpec().items():
-            spec = service_pb2.KeyTensorSpec(key=k, spec=v)
-            action_spec.specs.append(spec)
+        action_spec = self._converter.ActionSpec()
 
         return action_spec
 

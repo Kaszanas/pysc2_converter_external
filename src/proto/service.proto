@@ -21,7 +21,7 @@ message Empty {}
 
 message KeyTensorSpec {
     required string key = 1;
-    required TensorSpec spec = 2;
+    required bytes spec = 2;
 }
 
 message ObservationSpec {
@@ -34,8 +34,19 @@ message ActionSpec {
     repeated KeyTensorSpec specs = 1;
 }
 
+// Represents the dynamically sized output data per frame
+message ConvertedObservation {
+    // A map of strings (feature names) to serialized `dm_env_rpc.v1.Tensor` bytes
+    map<string, bytes> tensors = 1;
+}
+
+message ActionRequest {
+    // A map of strings (action names) to serialized `dm_env_rpc.v1.Tensor` bytes
+    map<string, bytes> tensors = 1;
+}
+
 service ExternalConverterService {
-    rpc ConfigureConverter(ConverterSettings) returns (ConfigureResponse) {}
+    rpc ConfigureConverter(pysc2.ConverterSettings) returns (ConfigureResponse) {}
 
     rpc GetObservationSpec(Empty) returns (ObservationSpec) {}
 
@@ -43,6 +54,5 @@ service ExternalConverterService {
 
     rpc ConvertObservation(pysc2.Observation) returns (ConvertedObservation) {}
 
-    rpc ConvertAction()
-
+    rpc ConvertAction(ActionRequest) returns (pysc2.Action) {}
 }

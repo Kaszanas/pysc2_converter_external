@@ -67,7 +67,8 @@ class GRPCConverter:
     def convert_observation(
         self, observation: converter_pb2.Observation
     ) -> service_pb2.ConvertedObservation:
-        """Converts a SC2 API observation, enriching it with additional info.
+        """
+        Converts a SC2 API observation, enriching it with additional info.
 
         Args:
           observation: Proto containing the SC2 API observation proto for the
@@ -87,7 +88,8 @@ class GRPCConverter:
     def convert_action(
         self, action_request: service_pb2.ActionRequest
     ) -> converter_pb2.Action:
-        """Converts an agent action into an SC2 API action proto.
+        """
+        Converts an agent action into an SC2 API action proto.
 
         Note that the returned action also carries the game loop delay requested
         by this player until the next observation.

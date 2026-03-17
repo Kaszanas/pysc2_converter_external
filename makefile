@@ -6,6 +6,10 @@ GRPC_COMPILLER_DOCKERFILE_NAME=grpcio.dockerfile
 CONVERTER_IMAGE_NAME=pysc2_converter_server
 CONVERTER_DOCKERFILE_NAME=Dockerfile
 
+EXPOSED_HOST_PORT=9999
+EXPOSED_PORT=9999
+
+
 .PHONY: build_image
 build_image: ## Build the Docker image for the gRPC converter server
 	docker build -t $(CONVERTER_IMAGE_NAME) -f $(DOCKER_DIR)/$(CONVERTER_DOCKERFILE_NAME) .
@@ -18,7 +22,7 @@ test_docker: ## Run pytest inside the dev Docker container
 .PHONY: run
 run: ## Run the gRPC converter server in a Docker container
 	@make build_image
-	docker run --rm -it $(CONVERTER_IMAGE_NAME) bash
+	docker run -p $(EXPOSED_HOST_PORT):$(EXPOSED_PORT) --rm -it $(CONVERTER_IMAGE_NAME)
 
 
 

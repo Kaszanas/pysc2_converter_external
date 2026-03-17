@@ -35,12 +35,20 @@ class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
         action_spec = self.converter.action_spec()
         return action_spec
 
-    def ConvertObservation(self, request, context) -> service_pb2.ConvertedObservation:
-        converted_obs = self.converter.convert_observation(request)
+    def ConvertObservation(
+        self,
+        request: converter_pb2.Observation,
+        context,
+    ) -> service_pb2.ConvertedObservation:
+        converted_obs = self.converter.convert_observation(observation=request)
         return converted_obs
 
-    def ConvertAction(self, request, context) -> converter_pb2.Action:
-        converted_action = self.converter.convert_action(request)
+    def ConvertAction(
+        self,
+        request: service_pb2.ActionRequest,
+        context,
+    ) -> converter_pb2.Action:
+        converted_action = self.converter.convert_action(action_request=request)
         return converted_action
 
 
@@ -52,7 +60,10 @@ def serve():
 
     # Starting server:
     logging.info("Adding Service to server.")
-    service_pb2_grpc.add_ExternalConverterServiceServicer_to_server(listener, server)
+    service_pb2_grpc.add_ExternalConverterServiceServicer_to_server(
+        servicer=listener,
+        server=server,
+    )
 
     insecure_port = "[::]:9999"
     logging.info(f"calling server.add_insecure_port({insecure_port}).")
@@ -68,7 +79,6 @@ def serve():
     except KeyboardInterrupt:
         logging.info("Detected KeyboardInterrupt, Stopping server.")
     finally:
-        logging.info("Calling .save_data() on Listener().")
         server.stop(grace=10)
 
 

@@ -37,5 +37,6 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # Add the virtual environment to PATH so commands like 'pytest' work natively
 ENV PATH="/app/.venv/bin:$PATH"
 
-# Keep the container running or drop to shell
-CMD ["/bin/bash"]
+EXPOSE 9999
+
+CMD ["python", "-m", "pysc2_converter_external.main"]

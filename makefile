@@ -48,6 +48,7 @@ compile_protos_python: ## Generate Python code for the gRPC service from the .pr
 	-I=./src/s2client-proto \
 	--python_out=./src/pysc2_converter_external/proto \
 	--grpc_python_out=./src/pysc2_converter_external/proto \
+	--mypy_out=./src/pysc2_converter_external/proto \
 	./src/proto/service.proto
 
 

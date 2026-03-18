@@ -39,17 +39,19 @@ compile_protos: ## Run the Docker container for compiling .proto files
 init_submodules: ## Initialize and update git submodules
 	git submodule update --init --recursive
 
+
 .PHONY: compile_protos_python
 compile_protos_python: ## Generate Python code for the gRPC service from the .proto file
 	python -m \
 	grpc_tools.protoc \
 	-I=./src/proto \
-	-I=./src/pysc2 \
+	-I=./src/pysc2/pysc2/env/converter/proto \
 	-I=./src/s2client-proto \
 	--python_out=./src/pysc2_converter_external/proto \
 	--grpc_python_out=./src/pysc2_converter_external/proto \
 	--mypy_out=./src/pysc2_converter_external/proto \
-	./src/proto/service.proto
+	./src/proto/service.proto \
+	./src/pysc2/pysc2/env/converter/proto/converter.proto
 
 
 test: ## Run all tests using pytest

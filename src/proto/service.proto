@@ -3,7 +3,7 @@
 syntax = "proto2";
 
 // Converter protocol file from pysc2:
-import "pysc2/env/converter/proto/converter.proto";
+import "converter.proto";
 
 message ConfigureRequest {
     required pysc2.ConverterSettings settings = 1;

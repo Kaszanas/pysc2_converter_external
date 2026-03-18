@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from pysc2.env.converter.proto import converter_pb2 as pysc2_dot_env_dot_converter_dot_proto_dot_converter__pb2
+import pysc2_converter_external.proto.converter_pb2 as converter__pb2
 import pysc2_converter_external.proto.service_pb2 as service__pb2
 
 
@@ -38,7 +38,7 @@ class ExternalConverterServiceStub(object):
         self.ConvertAction = channel.unary_unary(
                 '/ExternalConverterService/ConvertAction',
                 request_serializer=service__pb2.ConvertActionRequest.SerializeToString,
-                response_deserializer=pysc2_dot_env_dot_converter_dot_proto_dot_converter__pb2.Action.FromString,
+                response_deserializer=converter__pb2.Action.FromString,
                 )
 
 
@@ -101,7 +101,7 @@ def add_ExternalConverterServiceServicer_to_server(servicer, server):
             'ConvertAction': grpc.unary_unary_rpc_method_handler(
                     servicer.ConvertAction,
                     request_deserializer=service__pb2.ConvertActionRequest.FromString,
-                    response_serializer=pysc2_dot_env_dot_converter_dot_proto_dot_converter__pb2.Action.SerializeToString,
+                    response_serializer=converter__pb2.Action.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -194,6 +194,6 @@ class ExternalConverterService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ExternalConverterService/ConvertAction',
             service__pb2.ConvertActionRequest.SerializeToString,
-            pysc2_dot_env_dot_converter_dot_proto_dot_converter__pb2.Action.FromString,
+            converter__pb2.Action.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

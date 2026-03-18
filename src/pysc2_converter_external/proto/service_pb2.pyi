@@ -4,10 +4,10 @@ isort:skip_file
 Import from pysc2 protos the definitions for the message that is required:"""
 import builtins
 import collections.abc
-import pysc2_converter_external.proto.converter_pb2
 import google.protobuf.descriptor
 import google.protobuf.internal.containers
 import google.protobuf.message
+import pysc2_converter_external.proto.converter_pb2
 import sys
 
 if sys.version_info >= (3, 8):
@@ -23,14 +23,14 @@ class ConfigureRequest(google.protobuf.message.Message):
     SETTINGS_FIELD_NUMBER: builtins.int
     ENVIRONMENT_INFO_FIELD_NUMBER: builtins.int
     @property
-    def settings(self) -> converter_pb2.ConverterSettings: ...
+    def settings(self) -> pysc2_converter_external.proto.converter_pb2.ConverterSettings: ...
     @property
-    def environment_info(self) -> converter_pb2.EnvironmentInfo: ...
+    def environment_info(self) -> pysc2_converter_external.proto.converter_pb2.EnvironmentInfo: ...
     def __init__(
         self,
         *,
-        settings: converter_pb2.ConverterSettings | None = ...,
-        environment_info: converter_pb2.EnvironmentInfo | None = ...,
+        settings: pysc2_converter_external.proto.converter_pb2.ConverterSettings | None = ...,
+        environment_info: pysc2_converter_external.proto.converter_pb2.EnvironmentInfo | None = ...,
     ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["environment_info", b"environment_info", "settings", b"settings"]) -> builtins.bool: ...
     def ClearField(self, field_name: typing_extensions.Literal["environment_info", b"environment_info", "settings", b"settings"]) -> None: ...
@@ -78,12 +78,12 @@ class ConvertObservationRequest(google.protobuf.message.Message):
     OBSERVATION_FIELD_NUMBER: builtins.int
     session_id: builtins.int
     @property
-    def observation(self) -> converter_pb2.Observation: ...
+    def observation(self) -> pysc2_converter_external.proto.converter_pb2.Observation: ...
     def __init__(
         self,
         *,
         session_id: builtins.int | None = ...,
-        observation: converter_pb2.Observation | None = ...,
+        observation: pysc2_converter_external.proto.converter_pb2.Observation | None = ...,
     ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["observation", b"observation", "session_id", b"session_id"]) -> builtins.bool: ...
     def ClearField(self, field_name: typing_extensions.Literal["observation", b"observation", "session_id", b"session_id"]) -> None: ...
@@ -97,12 +97,12 @@ class ConvertActionRequest(google.protobuf.message.Message):
     ACTION_FIELD_NUMBER: builtins.int
     session_id: builtins.int
     @property
-    def action(self) -> converter_pb2.Action: ...
+    def action(self) -> pysc2_converter_external.proto.converter_pb2.Action: ...
     def __init__(
         self,
         *,
         session_id: builtins.int | None = ...,
-        action: converter_pb2.Action | None = ...,
+        action: pysc2_converter_external.proto.converter_pb2.Action | None = ...,
     ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["action", b"action", "session_id", b"session_id"]) -> builtins.bool: ...
     def ClearField(self, field_name: typing_extensions.Literal["action", b"action", "session_id", b"session_id"]) -> None: ...

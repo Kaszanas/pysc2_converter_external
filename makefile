@@ -35,24 +35,31 @@ compile_protos: ## Run the Docker container for compiling .proto files
 	@make build_grpcio_image
 	docker run --rm -it -v ".:/workspace" $(GRPC_COMPILLER_IMAGE_NAME) make compile_protos_python
 
+docker_patch_protos: ## Run the Docker container to patch generated proto files
+	@make build_grpcio_image
+	docker run --rm -it -v ".:/workspace" $(GRPC_COMPILLER_IMAGE_NAME) make patch_protos_command
+
 .PHONY: init_submodules
 init_submodules: ## Initialize and update git submodules
 	git submodule update --init --recursive
+
+
+.PHONY: patch_protos_command
+patch_protos_command: ## Patch generated proto files to fix imports
+	python ./scripts/patch_protos.py
 
 
 .PHONY: compile_protos_python
 compile_protos_python: ## Generate Python code for the gRPC service from the .proto file
 	python -m \
 	grpc_tools.protoc \
-	-I=./src/proto \
-	-I=./src/pysc2/pysc2/env/converter/proto \
+	-I=./src \
 	-I=./src/s2client-proto \
-	--python_out=./src/pysc2_converter_external/proto \
-	--grpc_python_out=./src/pysc2_converter_external/proto \
-	--mypy_out=./src/pysc2_converter_external/proto \
-	./src/proto/service.proto \
-	./src/pysc2/pysc2/env/converter/proto/converter.proto
-
+	--python_out=./src \
+	--grpc_python_out=./src \
+	--mypy_out=./src \
+	./src/pysc2_converter_external/proto/service.proto \
+	./src/pysc2_converter_external/proto/converter.proto
 
 test: ## Run all tests using pytest
 	pytest tests/

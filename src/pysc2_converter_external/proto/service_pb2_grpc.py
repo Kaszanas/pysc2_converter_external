@@ -2,8 +2,8 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import pysc2_converter_external.proto.converter_pb2 as converter__pb2
-import pysc2_converter_external.proto.service_pb2 as service__pb2
+from pysc2_converter_external.proto import converter_pb2 as pysc2__converter__external_dot_proto_dot_converter__pb2
+from pysc2_converter_external.proto import service_pb2 as pysc2__converter__external_dot_proto_dot_service__pb2
 
 
 class ExternalConverterServiceStub(object):
@@ -17,28 +17,28 @@ class ExternalConverterServiceStub(object):
         """
         self.ConfigureConverter = channel.unary_unary(
                 '/ExternalConverterService/ConfigureConverter',
-                request_serializer=service__pb2.ConfigureRequest.SerializeToString,
-                response_deserializer=service__pb2.ConfigureResponse.FromString,
+                request_serializer=pysc2__converter__external_dot_proto_dot_service__pb2.ConfigureRequest.SerializeToString,
+                response_deserializer=pysc2__converter__external_dot_proto_dot_service__pb2.ConfigureResponse.FromString,
                 )
         self.GetObservationSpec = channel.unary_unary(
                 '/ExternalConverterService/GetObservationSpec',
-                request_serializer=service__pb2.SessionID.SerializeToString,
-                response_deserializer=service__pb2.ObservationSpec.FromString,
+                request_serializer=pysc2__converter__external_dot_proto_dot_service__pb2.SessionID.SerializeToString,
+                response_deserializer=pysc2__converter__external_dot_proto_dot_service__pb2.ObservationSpec.FromString,
                 )
         self.GetActionSpec = channel.unary_unary(
                 '/ExternalConverterService/GetActionSpec',
-                request_serializer=service__pb2.SessionID.SerializeToString,
-                response_deserializer=service__pb2.ActionSpec.FromString,
+                request_serializer=pysc2__converter__external_dot_proto_dot_service__pb2.SessionID.SerializeToString,
+                response_deserializer=pysc2__converter__external_dot_proto_dot_service__pb2.ActionSpec.FromString,
                 )
         self.ConvertObservation = channel.unary_unary(
                 '/ExternalConverterService/ConvertObservation',
-                request_serializer=service__pb2.ConvertObservationRequest.SerializeToString,
-                response_deserializer=service__pb2.ConvertedObservation.FromString,
+                request_serializer=pysc2__converter__external_dot_proto_dot_service__pb2.ConvertObservationRequest.SerializeToString,
+                response_deserializer=pysc2__converter__external_dot_proto_dot_service__pb2.ConvertedObservation.FromString,
                 )
         self.ConvertAction = channel.unary_unary(
                 '/ExternalConverterService/ConvertAction',
-                request_serializer=service__pb2.ConvertActionRequest.SerializeToString,
-                response_deserializer=converter__pb2.Action.FromString,
+                request_serializer=pysc2__converter__external_dot_proto_dot_service__pb2.ConvertActionRequest.SerializeToString,
+                response_deserializer=pysc2__converter__external_dot_proto_dot_converter__pb2.Action.FromString,
                 )
 
 
@@ -80,28 +80,28 @@ def add_ExternalConverterServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'ConfigureConverter': grpc.unary_unary_rpc_method_handler(
                     servicer.ConfigureConverter,
-                    request_deserializer=service__pb2.ConfigureRequest.FromString,
-                    response_serializer=service__pb2.ConfigureResponse.SerializeToString,
+                    request_deserializer=pysc2__converter__external_dot_proto_dot_service__pb2.ConfigureRequest.FromString,
+                    response_serializer=pysc2__converter__external_dot_proto_dot_service__pb2.ConfigureResponse.SerializeToString,
             ),
             'GetObservationSpec': grpc.unary_unary_rpc_method_handler(
                     servicer.GetObservationSpec,
-                    request_deserializer=service__pb2.SessionID.FromString,
-                    response_serializer=service__pb2.ObservationSpec.SerializeToString,
+                    request_deserializer=pysc2__converter__external_dot_proto_dot_service__pb2.SessionID.FromString,
+                    response_serializer=pysc2__converter__external_dot_proto_dot_service__pb2.ObservationSpec.SerializeToString,
             ),
             'GetActionSpec': grpc.unary_unary_rpc_method_handler(
                     servicer.GetActionSpec,
-                    request_deserializer=service__pb2.SessionID.FromString,
-                    response_serializer=service__pb2.ActionSpec.SerializeToString,
+                    request_deserializer=pysc2__converter__external_dot_proto_dot_service__pb2.SessionID.FromString,
+                    response_serializer=pysc2__converter__external_dot_proto_dot_service__pb2.ActionSpec.SerializeToString,
             ),
             'ConvertObservation': grpc.unary_unary_rpc_method_handler(
                     servicer.ConvertObservation,
-                    request_deserializer=service__pb2.ConvertObservationRequest.FromString,
-                    response_serializer=service__pb2.ConvertedObservation.SerializeToString,
+                    request_deserializer=pysc2__converter__external_dot_proto_dot_service__pb2.ConvertObservationRequest.FromString,
+                    response_serializer=pysc2__converter__external_dot_proto_dot_service__pb2.ConvertedObservation.SerializeToString,
             ),
             'ConvertAction': grpc.unary_unary_rpc_method_handler(
                     servicer.ConvertAction,
-                    request_deserializer=service__pb2.ConvertActionRequest.FromString,
-                    response_serializer=converter__pb2.Action.SerializeToString,
+                    request_deserializer=pysc2__converter__external_dot_proto_dot_service__pb2.ConvertActionRequest.FromString,
+                    response_serializer=pysc2__converter__external_dot_proto_dot_converter__pb2.Action.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -125,8 +125,8 @@ class ExternalConverterService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ExternalConverterService/ConfigureConverter',
-            service__pb2.ConfigureRequest.SerializeToString,
-            service__pb2.ConfigureResponse.FromString,
+            pysc2__converter__external_dot_proto_dot_service__pb2.ConfigureRequest.SerializeToString,
+            pysc2__converter__external_dot_proto_dot_service__pb2.ConfigureResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -142,8 +142,8 @@ class ExternalConverterService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ExternalConverterService/GetObservationSpec',
-            service__pb2.SessionID.SerializeToString,
-            service__pb2.ObservationSpec.FromString,
+            pysc2__converter__external_dot_proto_dot_service__pb2.SessionID.SerializeToString,
+            pysc2__converter__external_dot_proto_dot_service__pb2.ObservationSpec.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -159,8 +159,8 @@ class ExternalConverterService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ExternalConverterService/GetActionSpec',
-            service__pb2.SessionID.SerializeToString,
-            service__pb2.ActionSpec.FromString,
+            pysc2__converter__external_dot_proto_dot_service__pb2.SessionID.SerializeToString,
+            pysc2__converter__external_dot_proto_dot_service__pb2.ActionSpec.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -176,8 +176,8 @@ class ExternalConverterService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ExternalConverterService/ConvertObservation',
-            service__pb2.ConvertObservationRequest.SerializeToString,
-            service__pb2.ConvertedObservation.FromString,
+            pysc2__converter__external_dot_proto_dot_service__pb2.ConvertObservationRequest.SerializeToString,
+            pysc2__converter__external_dot_proto_dot_service__pb2.ConvertedObservation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -193,7 +193,7 @@ class ExternalConverterService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ExternalConverterService/ConvertAction',
-            service__pb2.ConvertActionRequest.SerializeToString,
-            converter__pb2.Action.FromString,
+            pysc2__converter__external_dot_proto_dot_service__pb2.ConvertActionRequest.SerializeToString,
+            pysc2__converter__external_dot_proto_dot_converter__pb2.Action.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

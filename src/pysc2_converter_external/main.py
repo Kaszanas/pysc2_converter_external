@@ -2,11 +2,13 @@ import logging
 import time
 from concurrent import futures
 
+import click
 import grpc
 
 # from pysc2.env.converter.proto import converter_pb2
 import pysc2_converter_external.proto.service_pb2_grpc as service_pb2_grpc
 from pysc2_converter_external.grpc_service_listener import Listener
+from pysc2_converter_external.settings import LogLevel, initialize_logging
 
 
 def serve():
@@ -39,13 +41,20 @@ def serve():
         server.stop(grace=10)
 
 
-def main():
+@click.command(
+    help="Starts the PySC2 Converter gRPC server. Listens for incoming connection from clients that want to use the PySC2 Converter."
+)
+@click.option(
+    "--log",
+    type=click.Choice(list(LogLevel), case_sensitive=False),
+    default=LogLevel.WARNING,
+    help="Log level. Default is WARNING.",
+)
+def main(
+    log: LogLevel,
+):
 
-    logging.basicConfig(
-        level=logging.INFO,
-        format="[%(asctime)s] %(levelname)s: %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-    )
+    initialize_logging(log_level=log)
 
     # Initialize the gRPC server and register the converter service implementation
     serve()

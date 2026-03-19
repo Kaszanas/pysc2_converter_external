@@ -8,9 +8,11 @@ authors = [
 ]
 requires-python = ">=3.10"
 dependencies = [
+    "click>=8.3.1",
     "grpcio>=1.78.0",
     "protobuf<3.21.0",
     "pysc2>=4.0.0",
+    "python-dotenv>=1.2.2",
     "s2clientprotocol>=5.0.15.95299.0",
     "s2protocol>=5.0.15.95299.0",
 ]

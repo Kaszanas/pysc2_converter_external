@@ -8,6 +8,7 @@ authors = [
 ]
 requires-python = ">=3.10"
 dependencies = [
+    "click>=8.3.1",
     "grpcio>=1.78.0",
     "protobuf<3.21.0",
     "pysc2>=4.0.0",

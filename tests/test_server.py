@@ -9,13 +9,13 @@ from concurrent import futures
 
 import grpc
 import pytest
-from pysc2.env.converter.proto import converter_pb2
 from s2clientprotocol import common_pb2
 from s2clientprotocol import sc2api_pb2 as sc_pb
 
 import pysc2_converter_external.proto.service_pb2 as service_pb2
 import pysc2_converter_external.proto.service_pb2_grpc as service_pb2_grpc
 from pysc2_converter_external.main import Listener
+from pysc2_converter_external.proto import converter_pb2
 
 
 @pytest.fixture(scope="module")
@@ -68,17 +68,22 @@ ENVIRONMENT_INFO = converter_pb2.EnvironmentInfo(game_info=EXAMPLE_GAME_INFO_PRO
 
 
 class TestExternalConverterService:
+    session_id = None
+
     @pytest.fixture(scope="class", autouse=True)
     def configure_server_once(self, grpc_client):
         """Configures the server once for all tests in this class."""
-        request = service_pb2.ConfigureRequest(
+        req = service_pb2.ConfigureRequest(
             settings=CONVERTER_SETTINGS,
             environment_info=ENVIRONMENT_INFO,
         )
-        response = grpc_client.ConfigureConverter(request)
-        # Assuming you want the shared setup to configure correctly
-        # assert response.success is True
+        response = grpc_client.ConfigureConverter(req)
+
         assert response.success is True, "Failed to configure converter."
+        assert response.session_id != 0, (
+            "Converter session ID should be set after configuration."
+        )
+        self.__class__.session_id = response.session_id
 
     def test_configure_converter_fail(self, grpc_client):
         """Verifies that the converter configures correctly."""
@@ -90,22 +95,42 @@ class TestExternalConverterService:
         env_info = converter_pb2.EnvironmentInfo()
 
         request = service_pb2.ConfigureRequest(
-            settings=CONVERTER_SETTINGS, environment_info=env_info
+            settings=CONVERTER_SETTINGS,
+            environment_info=env_info,
         )
-
         response = grpc_client.ConfigureConverter(request)
+        assert response.session_id == 0, (
+            "Converter session ID should be 0 on failed configuration."
+        )
         assert response.success is False
+
+    def test_call_negative_session_id(self, grpc_client):
+        """Verifies that calls with negative session IDs are handled gracefully."""
+
+        with pytest.raises(ValueError) as _:
+            _ = service_pb2.SessionID(session_id=-1)
+
+    def test_call_with_invalid_session_id(self, grpc_client):
+        """Verifies that calls with invalid session IDs are handled gracefully."""
+
+        # Session IDs are zero indexed, and need to be positive integers,
+        # proto type is uint64:
+        invalid_session_ids = [0, 9999]
+
+        for invalid_session_id in invalid_session_ids:
+            request = service_pb2.SessionID(session_id=invalid_session_id)
+            with pytest.raises(grpc.RpcError) as exc_info:
+                grpc_client.GetObservationSpec(request)
+                assert exc_info.value.code() == grpc.StatusCode.NOT_FOUND
 
     def test_get_observation_spec(self, grpc_client):
         """Verifies observation specification is returned."""
-        request = service_pb2.Empty()
+        request = service_pb2.SessionID(session_id=type(self).session_id)
         response = grpc_client.GetObservationSpec(request)
-        # The response should have a repeated 'specs' field
         assert hasattr(response, "specs")
 
     def test_get_action_spec(self, grpc_client):
         """Verifies action specification is returned."""
-        request = service_pb2.Empty()
+        request = service_pb2.SessionID(session_id=type(self).session_id)
         response = grpc_client.GetActionSpec(request)
-        # The response should have a repeated 'specs' field
         assert hasattr(response, "specs")

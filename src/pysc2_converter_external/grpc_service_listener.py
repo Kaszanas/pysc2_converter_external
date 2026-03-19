@@ -14,11 +14,15 @@ from pysc2_converter_external.grpc_converter import GRPCConverter
 class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
     def __init__(self):
 
+        logging.debug(f"Initializing {self.__class__.__name__}")
+
         # Map of session_ids to converters, this allows multiple clients to
         # connect to the server and configure their own converters.
         self._converters: dict[int, GRPCConverter] = dict()
         self._max_converter_session_id = 0
         self._lock = threading.Lock()
+
+        logging.debug(f"Finished initializing {self.__class__.__name__}")
 
     def _get_converter(self, session_id: int, context) -> GRPCConverter | None:
         with self._lock:
@@ -102,6 +106,14 @@ class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
         request: service_pb2.ActionRequest,
         context,
     ) -> converter_pb2.Action:
+
+        logging.debug(
+            f"Received {self.ConvertAction.__name__} request for session {request.session_id}"
+        )
+
         converter = self._get_converter(session_id=request.session_id, context=context)
         converted_action = converter.convert_action(action_request=request)
+
+        logging.debug(f"Returning converted action for session {request.session_id}")
+
         return converted_action

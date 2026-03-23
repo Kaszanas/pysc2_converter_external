@@ -62,7 +62,11 @@ class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
             # session IDs are 1-indexed.
             return service_pb2.ConfigureResponse(success=False, session_id=0)
 
-    def GetObservationSpec(self, request, context) -> service_pb2.ObservationSpec:
+    def GetObservationSpec(
+        self,
+        request: service_pb2.SessionID,
+        context,
+    ) -> service_pb2.ObservationSpec:
         logging.debug(
             f"Received {self.GetObservationSpec.__name__} request for session {request.session_id}"
         )
@@ -73,7 +77,11 @@ class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
 
         return observation_spec
 
-    def GetActionSpec(self, request, context) -> service_pb2.ActionSpec:
+    def GetActionSpec(
+        self,
+        request: service_pb2.SessionID,
+        context,
+    ) -> service_pb2.ActionSpec:
         logging.debug(
             f"Received GetActionSpec request for session {request.session_id}"
         )
@@ -85,7 +93,7 @@ class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
 
     def ConvertObservation(
         self,
-        request: converter_pb2.Observation,
+        request: service_pb2.ConvertObservationRequest,
         context,
     ) -> service_pb2.ConvertedObservation:
         logging.debug(
@@ -93,7 +101,7 @@ class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
         )
 
         converter = self._get_converter(session_id=request.session_id, context=context)
-        converted_obs = converter.convert_observation(observation=request)
+        converted_obs = converter.convert_observation(observation=request.observation)
 
         logging.debug(
             f"Returning converted observation for session {request.session_id}"
@@ -103,7 +111,7 @@ class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
 
     def ConvertAction(
         self,
-        request: service_pb2.ActionRequest,
+        request: service_pb2.ConvertActionRequest,
         context,
     ) -> converter_pb2.Action:
 
@@ -112,7 +120,7 @@ class Listener(service_pb2_grpc.ExternalConverterServiceServicer):
         )
 
         converter = self._get_converter(session_id=request.session_id, context=context)
-        converted_action = converter.convert_action(action_request=request)
+        converted_action = converter.convert_action(action_request=request.action)
 
         logging.debug(f"Returning converted action for session {request.session_id}")
 
